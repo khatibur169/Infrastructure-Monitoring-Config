@@ -1,0 +1,14 @@
+groups:
+  - name: example.rules
+    rules:
+      - alert: HighCPULoad
+        expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High CPU load detected on instance {{ $labels.instance }}"
+          description: "{{ $labels.instance }} has CPU load greater than 90% for 10 minutes"
+
+      - record: APIResponseTime
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job="api-server",le="0.5"}[5m])) by (le))
