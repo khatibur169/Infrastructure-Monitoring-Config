@@ -1,0 +1,17 @@
+# datadog/datadog.yaml
+
+logs_enabled: true
+
+logs_config:
+  service: 'my-service'
+  source: 'my-app'
+
+process_config:
+  enabled: true
+
+apm_config:
+  enabled: true
+
+tags:
+  - environment:production
+  - region:us-west
