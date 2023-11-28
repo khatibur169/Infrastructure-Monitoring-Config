@@ -1,0 +1,24 @@
+# datadog/dashboards.yaml
+
+dashboards:
+  - name: "Infrastructure Overview Dashboard"
+    description: "Dashboard providing an overview of infrastructure metrics"
+    template_variables:
+      - name: "environment"
+        prefix: "env"
+        default: "prod"
+        list: ["prod", "staging", "dev"]
+    graphs:
+      - definition:
+          viz: "timeseries"
+          requests:
+            - query: "avg:system.cpu.idle{*} by {host} as %"
+          autoscale: true
+          title: "CPU Usage"
+          title_size: 16
+          title_align: "left"
+          markers:
+            - value: 80
+              style: "line"
+              color: "red"
+              label: "Threshold: 80%"

@@ -1,0 +1,16 @@
+# datadog/monitors.yaml
+
+monitors:
+  - type: "metric alert"
+    name: "High CPU Usage Alert"
+    query: "avg(last_5m):avg:system.cpu.idle{*} by {host} < 20"
+    message: "High CPU usage detected on {{host.name}}"
+    options:
+      notify_no_data: true
+      threshold_windows: "last_5m"
+      no_data_timeframe: 10
+      evaluation_delay: 600
+    tags:
+      - "env:prod"
+    thresholds:
+      critical: 20
